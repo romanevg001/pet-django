@@ -22,6 +22,7 @@ def shop_index(request: HttpRequest) -> HttpResponse:
 
 def groups_list(request: HttpRequest) -> HttpResponse:
     context = {
-       "groups": Group.objects.all(),
+       #"groups": Group.objects.all(),
+       "groups": Group.objects.prefetch_related('permissions').all(),
     }
     return render(request, "shopapp/groups-list.html", context = context)

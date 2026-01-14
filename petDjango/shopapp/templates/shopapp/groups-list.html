@@ -8,18 +8,17 @@
 <h1>Groups list</h1>
 <div>
     {% for group in groups %}
-        <div>
-            <h3>{{group.name}}</h3>
+        <dl>
+            <dt><strong>{{group.name}}</strong></dt>
             {% for perm in group.permissions.all %}
-                <div>{{ perm.name }} (<code>{{perm.codename}}</code>)</div>
+                <dd>{{ perm.name }} (<code>{{perm.codename}}</code>)</dd>
             {% endfor %}
 
-        </div>
+        </dl>
 
     {% empty %}
-        No products
+        No groups
     {% endfor %}
 </div>
-<p>time_running: {{time_running}}</p>
-<p>{% lorem 3 p random %}</p>
+
 {% endblock %}
