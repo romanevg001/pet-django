@@ -1,0 +1,25 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+   Groups list
+{% endblock %}
+
+{% block body %}
+<h1>Groups list</h1>
+<div>
+    {% for group in groups %}
+        <div>
+            <h3>{{group.name}}</h3>
+            {% for perm in group.permissions.all %}
+                <div>{{ perm.name }} (<code>{{perm.codename}}</code>)</div>
+            {% endfor %}
+
+        </div>
+
+    {% empty %}
+        No products
+    {% endfor %}
+</div>
+<p>time_running: {{time_running}}</p>
+<p>{% lorem 3 p random %}</p>
+{% endblock %}
