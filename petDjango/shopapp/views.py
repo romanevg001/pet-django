@@ -38,6 +38,78 @@ def products_list(request: HttpRequest) -> HttpResponse:
     return render(request, "shopapp/products-list.html", context = context)
 
 def orders_list(request: HttpRequest) -> HttpResponse:
+    class Employee:
+
+        def __init__(self, name):
+            print('Employee'+name)
+            self.__name = name
+
+        @property
+        def name(self):
+            return self.__name
+
+        def work(self):
+            print(f"{self.name} works")
+
+    class Student:
+
+        def __init__(self, name):
+            print('Student'+name)
+
+            self.__name = name
+
+        @property
+        def name(self):
+            return self.__name
+
+        def study(self):
+            print(f"{self.name} studies")
+
+    class WorkingStudent(Employee, Student):
+        pass
+
+    tom = WorkingStudent("Tom")
+    tom.work()
+    tom.study()
+
+    class Person:
+        name = "Undefined"
+
+        def __init__(self, name, age):
+            self.name = name
+            self.__age = age
+
+        @property
+        def age(self):
+            return self.__age
+
+        @age.setter
+        def age(self, age):
+            if 0 < age < 110:
+                self.__age = age
+            else:
+                print("Недопустимый возраст")
+
+        def print_name(self):
+            print('name: ',self.name)
+            print('age: ',self.age)
+
+    print('-----------')
+
+    tom = Person('tom',23)
+    bob = Person('bob',35)
+    print('-----------')
+
+    tom.print_name()  # Undefined
+    bob.print_name()  # Undefined
+    print('-----------')
+
+    Person.name = "Nikolskaya"
+    bob.name = "Bob"
+
+    bob.print_name()  # Bob
+    tom.print_name()  # Undefined
+
     context = {
        "orders": Order.objects.select_related('user').prefetch_related('products').all(),
     }
