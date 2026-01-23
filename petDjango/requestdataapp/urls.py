@@ -17,9 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from requestdataapp.views import process_get_view
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('shop/', include('shopapp.urls')),
-    path('req/', include('requestdataapp.urls')),
+    path("get/", process_get_view, name="get-view")
 
 ]
