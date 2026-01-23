@@ -6,4 +6,13 @@
 
 {% block body %}
     <h1>Hello {{ request.method }} request!</h1>
+    <h1>Hello {%  firstof request.GET.name 'User' %} request!</h1>
+
+    <div>
+    <pre>
+        a = '{{ a }}'
+        b = '{{ b }}'
+        result = '{{ result }}'
+    </pre>
+    </div>
 {% endblock %}
