@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.http import HttpRequest,HttpResponse
 from django.shortcuts import render
 
@@ -17,5 +18,16 @@ def process_get_view(request: HttpRequest) -> HttpResponse:
 def user_form(request: HttpRequest) -> HttpResponse:
     context = {
     }
+    print(request.POST)
+
+
+    for key, value in request.POST.items():
+        print(key, value )
     return render(request, "requestdataapp/user-bio-form.html", context=context)
 
+def handle_file_upload(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST" and request.FILES.get("myfile"):
+        myfile = request.FILES["myfile"]
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+    return render(request, "requestdataapp/file-upload.html")

@@ -23,4 +23,12 @@
         </p>
         <button type="submit">Submit</button>
     </form>
+
+    {% if request.POST %}
+      {{ request.POST.name }}<br>
+      {{ request.POST.age }}<br>
+      {{ request.POST.bio }}<br>
+
+
+    {% endif %}
 {% endblock %}

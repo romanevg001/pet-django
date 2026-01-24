@@ -1,0 +1,27 @@
+{% extends 'requestdataapp/base.html' %}
+
+{% block title %}
+    File upload
+{% endblock %}
+
+{% block body %}
+    <h1>  File upload</h1>
+
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <p>
+            <label>File</label>
+            <input  name="myfile" type="file" >
+        </p>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if request.POST %}
+      {{ request.POST.name }}<br>
+      {{ request.POST.age }}<br>
+      {{ request.POST.bio }}<br>
+
+
+    {% endif %}
+{% endblock %}
