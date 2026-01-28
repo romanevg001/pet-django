@@ -6,14 +6,13 @@
 
 {% block body %}
 <h1>Products list</h1>
+    <p><a href="{% url 'shopapp:create_product' %}">Add product</a></p>
 <div>
     {% for item in products %}
-        <div>
+        <div style="border: 1px solid #ccc;padding: 10px;margin-bottom: 10px">
             <h3>{{item.name}}</h3>
             <p>Price: {{ item.price }}</p>
             <p>Discount: {% firstof item.discount 'no discount' %}</p>
-
-
         </div>
 
     {% empty %}
