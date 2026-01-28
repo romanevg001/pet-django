@@ -3,33 +3,60 @@ from timeit import default_timer
 from django.contrib.auth.models import Group
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect, reverse
+from django.views import View
 
-from .forms import ProductForm
+from .forms import ProductForm, GroupsForm
 from .models import Product,Order
 
+class ShopIndexView(View):
+    def get(self, request) -> HttpResponse:
+        products = [
+            ('Laptop', 1999),
+            ('Desktop', 2999),
+            ('Mouse', 999),
+        ]
+        context = {
+            "time_running": default_timer(),
+            "products": products
+        }
+        return render(request, "shopapp/shop-index.html", context=context)
 
 # Create your views here.
-def shop_index(request: HttpRequest) -> HttpResponse:
-    products = [
-        ('Laptop', 1999),
-        ('Desktop', 2999),
-        ('Mouse', 999),
-    ]
-    context = {
-        "time_running": default_timer(),
-        "products": products
-    }
-    return render(request, "shopapp/shop-index.html", context = context)
+# def shop_index(request: HttpRequest) -> HttpResponse:
+#     products = [
+#         ('Laptop', 1999),
+#         ('Desktop', 2999),
+#         ('Mouse', 999),
+#     ]
+#     context = {
+#         "time_running": default_timer(),
+#         "products": products
+#     }
+#     return render(request, "shopapp/shop-index.html", context = context)
     #print(request)
     #return HttpResponse("Hello, world. You're at the shop index.")
 
+class GroupsListView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        context = {
+            "form": GroupsForm(),
+            "groups": Group.objects.prefetch_related('permissions').all(),
+        }
+        return render(request, "shopapp/groups-list.html", context = context)
 
-def groups_list(request: HttpRequest) -> HttpResponse:
-    context = {
-       #"groups": Group.objects.all(),
-       "groups": Group.objects.prefetch_related('permissions').all(),
-    }
-    return render(request, "shopapp/groups-list.html", context = context)
+    def post(self, request: HttpRequest) -> HttpResponse:
+        form = GroupsForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect(request.path)
+
+
+    # def groups_list(request: HttpRequest) -> HttpResponse:
+#     context = {
+#        #"groups": Group.objects.all(),
+#        "groups": Group.objects.prefetch_related('permissions').all(),
+#     }
+#     return render(request, "shopapp/groups-list.html", context = context)
 
 
 def products_list(request: HttpRequest) -> HttpResponse:
