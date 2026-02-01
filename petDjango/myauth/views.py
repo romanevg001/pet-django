@@ -3,7 +3,11 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect,reverse
 from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 
+
+class AboutMeView(TemplateView):
+    template_name = "myauth/about-me.html"
 
 # Create your views here.
 # def login_view(request: HttpRequest) -> HttpResponse:
