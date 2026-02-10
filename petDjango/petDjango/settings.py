@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 
 from django.conf.global_settings import LOGIN_REDIRECT_URL
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,10 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'rest_framework',
     'shopapp.apps.ShopappConfig',
     'requestdataapp.apps.RequestdataappConfig',
-    'myauth.apps.MyauthConfig'
+    'myauth.apps.MyauthConfig',
+    'myapiapp.apps.MyapiappConfig'
 ]
 
 MIDDLEWARE = [
@@ -129,4 +131,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'shopapp:products_list'
+# LOGIN_REDIRECT_URL = 'shopapp:products_list'
+LOGIN_REDIRECT_URL = reverse_lazy('myauth:about-me')
+
+REST_FRAMEWORKS = {
+    'DEFAULT_AUTHENTICATION_CLASSES': "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+}
